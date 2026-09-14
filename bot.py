@@ -3,8 +3,8 @@ import time
 from datetime import datetime
 
 # ===== تنظیمات =====
-TELEGRAM_TOKEN = "8915381375:AAEgxoo3Mcblym15gW3H4vVlXvZZWhlamZo"
-CHAT_ID = "@CryptoAssistancebot"
+TELEGRAM_TOKEN = "YOUR_TOKEN_HERE"
+CHAT_ID = "YOUR_CHAT_ID_HERE"
 
 SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "XRPUSDT"]
 

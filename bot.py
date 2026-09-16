@@ -1,15 +1,23 @@
 import requests
 import time
+import os
 from datetime import datetime
 
 # ===== تنظیمات =====
-TELEGRAM_TOKEN = "YOUR_TOKEN_HERE"
-CHAT_ID = "YOUR_CHAT_ID_HERE"
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "YOUR_TOKEN_HERE")
+CHAT_ID = os.environ.get("CHAT_ID", "YOUR_CHAT_ID_HERE")
+
+# ===== تنظیمات WEEX =====
+WEEX_API_KEY = os.environ.get("WEEX_API_KEY", "YOUR_API_KEY_HERE")
+WEEX_SECRET_KEY = os.environ.get("WEEX_SECRET_KEY", "YOUR_SECRET_KEY_HERE")
+WEEX_PASSPHRASE = os.environ.get("WEEX_PASSPHRASE", "YOUR_PASSPHRASE_HERE")
 
 SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "XRPUSDT"]
 
 TAKE_PROFIT = 10
 STOP_LOSS = 5
+MAX_OPEN_TRADES = 2
+MAX_TRADE_HOURS = 48
 
 # ===== توابع =====
 
@@ -90,4 +98,4 @@ def main():
             time.sleep(60)
 
 if __name__ == "__main__":
-    main()
+    mmain()

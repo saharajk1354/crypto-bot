@@ -6,8 +6,6 @@ from threading import Thread
 from flask import Flask
 
 # ===== تنظیمات =====
-TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN", "YOUR_TOKEN_HERE")
-CHAT_ID = os.environ.get("CHAT_ID", "YOUR_CHAT_ID_HERE")
 SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "XRPUSDT"]
 TAKE_PROFIT = 10
 STOP_LOSS = 5
@@ -25,8 +23,15 @@ def run_web_server():
 
 # ===== توابع ربات =====
 def send_telegram(message):
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    data = {"chat_id": CHAT_ID, "text": message, "parse_mode": "HTML"}
+    token = os.environ.get("TELEGRAM_TOKEN")
+    chat_id = os.environ.get("CHAT_ID")
+    
+    if not token or not chat_id:
+        print("❌ ERROR: TELEGRAM_TOKEN or CHAT_ID is not set in Environment!")
+        return
+    
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    data = {"chat_id": chat_id, "text": message, "parse_mode": "HTML"}
     try:
         r = requests.post(url, data=data, timeout=10)
         print(f"TELEGRAM RESPONSE: {r.text}")
@@ -65,8 +70,14 @@ def analyze(symbol):
     return None
 
 def bot_loop():
-    print(f"BOT LOOP STARTED - Token: {TELEGRAM_TOKEN[:10]}... Chat: {CHAT_ID}")
+    print(f"CHECK ENV KEYS: {[k for k in os.environ.keys() if 'TELEGRAM' in k or 'CHAT' in k]}")
+    
+    token = os.environ.get("TELEGRAM_TOKEN")
+    chat_id = os.environ.get("CHAT_ID")
+    print(f"BOT LOOP STARTED - Token exists: {token is not None} - Chat exists: {chat_id is not None}")
+    
     send_telegram("🤖 ربات روشن شد!")
+    
     while True:
         try:
             now = datetime.now().strftime("%H:%M")

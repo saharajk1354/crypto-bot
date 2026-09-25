@@ -76,6 +76,22 @@ def bot_loop():
     chat_id = os.environ.get("CHAT_ID")
     print(f"BOT LOOP STARTED - Token exists: {token is not None} - Chat exists: {chat_id is not None}")
     
+    # ===== تست اتصال به Binance =====
+    print("TESTING CONNECTION TO BINANCE...")
+    try:
+        r = requests.get("https://api.binance.com/api/v3/ping", timeout=15)
+        print(f"BINANCE CONNECTION TEST: {r.status_code}")
+    except Exception as e:
+        print(f"BINANCE CONNECTION FAILED: {e}")
+    
+    # ===== تست اتصال به Google =====
+    print("TESTING CONNECTION TO GOOGLE...")
+    try:
+        r = requests.get("https://www.google.com", timeout=15)
+        print(f"GOOGLE CONNECTION TEST: {r.status_code}")
+    except Exception as e:
+        print(f"GOOGLE CONNECTION FAILED: {e}")
+    
     # ===== تست اتصال به تلگرام =====
     print("TESTING CONNECTION TO TELEGRAM...")
     try:
@@ -84,10 +100,11 @@ def bot_loop():
         print(f"TELEGRAM CONNECTION TEST: {r.text}")
     except Exception as e:
         print(f"TELEGRAM CONNECTION FAILED: {e}")
-    # ===== پایان تست =====
     
+    # ===== ارسال پیام اولیه =====
     send_telegram("🤖 ربات روشن شد!")
     
+    # ===== حلقه اصلی =====
     while True:
         try:
             now = datetime.now().strftime("%H:%M")

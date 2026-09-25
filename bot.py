@@ -76,6 +76,16 @@ def bot_loop():
     chat_id = os.environ.get("CHAT_ID")
     print(f"BOT LOOP STARTED - Token exists: {token is not None} - Chat exists: {chat_id is not None}")
     
+    # ===== تست اتصال به تلگرام =====
+    print("TESTING CONNECTION TO TELEGRAM...")
+    try:
+        test_url = f"https://api.telegram.org/bot{token}/getMe"
+        r = requests.get(test_url, timeout=15)
+        print(f"TELEGRAM CONNECTION TEST: {r.text}")
+    except Exception as e:
+        print(f"TELEGRAM CONNECTION FAILED: {e}")
+    # ===== پایان تست =====
+    
     send_telegram("🤖 ربات روشن شد!")
     
     while True:
